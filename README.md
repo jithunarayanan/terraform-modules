@@ -3,7 +3,7 @@
 This repository contains reusable and customizable **Terraform modules** for deploying secure and scalable AWS infrastructure. These modules are production-ready and designed with flexibility to support various environments and use cases (dev, staging, prod).
 
 
-## 🚀 Features
+## Features
 
 - Custom VPC creation with DNS support and hostname resolution
 - Multi-AZ public and private subnets
@@ -15,14 +15,14 @@ This repository contains reusable and customizable **Terraform modules** for dep
 
 ---
 
-## 📦 Module Structure
+## Module Structure
 
 - `modules/vpc/` – Complete VPC module with subnets, routing, NATs, and NACLs
 - Additional modules can be added for compute, RDS, S3, etc.
 
 ---
 
-## 🛠️ Usage
+## Usage
 
 ### Prerequisites
 
@@ -91,19 +91,19 @@ output "private_subnet_ids" {
 }
 
 ```
-## 🔖 Tags Example
+## Tags Example
 Each resource is tagged like:
 
 Name = k3s-dev-vpc
 Name = k3s-dev-public-subnet-1
 Name = k3s-dev-nacl
 
-## 🧪 To Deploy
+## To Deploy
 ```
 terraform init
 terraform apply
 ```
-## 🧹 To Destroy
+## To Destroy
 ```
 terraform destroy
 ```
