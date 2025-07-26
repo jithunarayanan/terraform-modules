@@ -52,7 +52,7 @@ resource "aws_route_table" "public" {
   }
   tags = merge(local.common_tags, {
   Name = "${local.tag_prefix}-public-route-table-${count.index + 1}"
-  })
+})
   
 }
 
@@ -66,7 +66,7 @@ resource "aws_route_table" "private" {
 #   }
   tags = merge(local.common_tags, {
   Name = "${local.tag_prefix}-private-route-table-${count.index + 1}"
-  })
+})
 }
 
 resource "aws_route_table_association" "public" {
