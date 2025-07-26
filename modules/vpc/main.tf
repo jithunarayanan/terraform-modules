@@ -82,7 +82,7 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_network_acl" "nacl" {
-  vpc_id = aws_vpc.nacl.id
+  vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
   Name = "${local.tag_prefix}-nacl-${count.index + 1}"

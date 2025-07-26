@@ -25,5 +25,5 @@ output "private_route_table_ids" {
 
 output "network_acl_id" {
   description = "Network ACL ID used by the subnets"
-  value       = aws_network_acl.this.id
+  value       = aws_network_acl.nacl.id
 }
