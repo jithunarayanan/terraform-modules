@@ -34,19 +34,23 @@ This repository contains reusable and customizable **Terraform modules** for dep
 ### Example: Root `main.tf`
 
 ```hcl
-module "k3s_vpc" {
-  #source               = "./modules/vpc"
-  source               = "https://github.com/jithunarayanan/terraform-modules/modules/vpc"
-  name_prefix          = "k3s"
-  environment          = "dev"
-  vpc_cidr             = "10.10.0.0/16"
-  public_azs           = ["us-east-1a", "us-east-1b"]
-  private_azs          = ["us-east-1a", "us-east-1b"]
-  public_subnet_cidrs  = ["10.10.1.0/24", "10.10.2.0/24"]
-  private_subnet_cidrs = ["10.10.3.0/24", "10.10.4.0/24"]
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
 
+module "k3s_vpc" {
+  source = "git::https://github.com/jithunarayanan/terraform-modules.git//modules/vpc"
+
+  name_prefix           = "k3s"
+  environment           = "dev"
+  vpc_cidr              = "10.10.0.0/16"
+  public_azs            = ["us-east-1a", "us-east-1b"]
+  private_azs           = ["us-east-1a", "us-east-1b"]
+  public_subnet_cidrs   = ["10.10.1.0/24", "10.10.2.0/24"]
+  private_subnet_cidrs  = ["10.10.3.0/24", "10.10.4.0/24"]
   default_tags = {
-    Project = "K3s-Cluster"
+    Project = "K3s"
     Owner   = "Jithu"
   }
 
@@ -72,6 +76,20 @@ module "k3s_vpc" {
     }
   ]
 }
+
+
+output "vpc_id" {
+  value = module.k3s_vpc.vpc_id
+}
+
+output "public_subnet_ids" {
+  value = module.k3s_vpc.public_subnet_ids
+}
+
+output "private_subnet_ids" {
+  value = module.k3s_vpc.private_subnet_ids  
+}
+
 ```
 ## 🔖 Tags Example
 Each resource is tagged like:
