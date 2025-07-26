@@ -50,7 +50,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-rtb-${count.index + 1}-public"
+  Name = "${local.tag_prefix}-rtb-${count.index + 1}-public-${var.public_azs[count.index]}"
 })
 
   route {
