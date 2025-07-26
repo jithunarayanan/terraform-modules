@@ -41,7 +41,7 @@ resource "aws_subnet" "private" {
   availability_zone = var.private_azs[count.index]
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-private-subnet-${count.index + 1}--var.private_azs"
+  Name = "${local.tag_prefix}-private-subnet-${count.index + 1}-var.private_azs"
   })
 }
 
@@ -50,7 +50,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-public-route-table-${count.index + 1}"
+  Name = "${local.tag_prefix}-rtb-${count.index + 1}-public"
 })
 
   route {
@@ -68,7 +68,7 @@ resource "aws_route_table" "private" {
 #     gateway_id = aws_nat_gateway.this[count.index].id
 #   }
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-private-route-table-${count.index + 1}"
+  Name = "${local.tag_prefix}-rtb-${count.index + 1}-private-var.private_azs"
 })
 }
 
