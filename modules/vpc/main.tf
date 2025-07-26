@@ -13,12 +13,14 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
   tags = merge(local.common_tags, {
   Name = "${local.tag_prefix}-vpc"
-})
+  })
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
-  tags = local.common_tags
+  tags = merge(local.common_tags, {
+  Name = "${local.tag_prefix}-igw"
+  })
 }
 
 resource "aws_subnet" "public" {
@@ -28,7 +30,7 @@ resource "aws_subnet" "public" {
   availability_zone       = var.public_azs[count.index]
   map_public_ip_on_launch = true
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-public-subnet-${count.index + 1}"
+  Name = "${local.tag_prefix}-subnet-public-${count.index + 1}-var.public_azs"
   })
 }
 
@@ -39,15 +41,16 @@ resource "aws_subnet" "private" {
   availability_zone = var.private_azs[count.index]
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-private-subnet-${count.index + 1}"
+  Name = "${local.tag_prefix}-private-subnet-${count.index + 1}--var.private_azs"
   })
 }
 
 resource "aws_route_table" "public" {
+  count  = length(var.public_azs)
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-public-route-table"
+  Name = "${local.tag_prefix}-public-route-table-${count.index + 1}"
 })
 
   route {
@@ -72,7 +75,7 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "public" {
   count          = length(var.public_azs)
   subnet_id      = aws_subnet.public[count.index].id
-  route_table_id = aws_route_table.public.id
+  route_table_id = aws_route_table.private[count.index].id
 }
 
 resource "aws_route_table_association" "private" {
@@ -82,10 +85,11 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_network_acl" "nacl" {
+  count  = length(var.private_azs)
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-  Name = "${local.tag_prefix}-nacl"
+  Name = "${local.tag_prefix}-nacl-${count.index + 1}"
   })
 }
 
