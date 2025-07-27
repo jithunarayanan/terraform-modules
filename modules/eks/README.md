@@ -5,7 +5,7 @@ This module provisions a basic AWS EKS cluster setup with:
 - Managed Node Group
 
 ## Prerequisites
-- a vpc with subnets
+- Vpc with subnets
 
 ## Inputs
 
@@ -21,7 +21,7 @@ This module provisions a basic AWS EKS cluster setup with:
 | `node_max_size`       | Max size of node group                    | `1`             |
 | `node_instance_types` | List of EC2 instance types                | `["t3.medium"]` |
 | `default_tags`        | Map of default tags to apply to resources | `{}`            |
-|-----------------------|-------------------------------------------|-----------------|
+
 ## Outputs
 
 | Output              | Description                     |
@@ -29,7 +29,7 @@ This module provisions a basic AWS EKS cluster setup with:
 | `cluster_name`      | Name of the EKS cluster         |
 | `cluster_endpoint`  | API endpoint of the EKS cluster |
 | `subnet_ids`        | List of subnet IDs              |
-|---------------------|---------------------------------|
+
 ## Example Usage
 
 ```hcl
@@ -50,3 +50,4 @@ module "eks" {
   }
 }
 ```
+
