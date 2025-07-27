@@ -55,7 +55,7 @@ resource "aws_route_table" "public" {
   }
   tags = merge(local.common_tags, {
   # Name = "${local.tag_prefix}-rtb-${count.index + 1}-public-${var.public_azs[count.index]}"
-  Name = "${local.tag_prefix}-rtb-${count.index + 1}-public"
+  Name = "${local.tag_prefix}-rtb-pulic"
 })
 }
 
